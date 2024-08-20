@@ -38,16 +38,16 @@ jobs:
         continue-on-error: true
 
       - name: Deploy code to server
-        run: rsync -arv --delete ./ ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}}:${{secrets.SERVER_ROOT}}
+        run: rsync -arv --exclude 'node_modules' --delete ./ ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}}:${{secrets.SERVER_ROOT}}
 
       - name: Install dependencies on server
         run: ssh ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}} "cd ${{secrets.SERVER_ROOT}} && npm install"
-
-      - name: Build project on server
-        run: ssh ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}} "source ~/.nvm/nvm.sh && nvm use default && cd ${{secrets.SERVER_ROOT}} && npm run build"
 
       - name: Migrate database
         run: ssh ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}} "source ~/.nvm/nvm.sh && nvm use default && cd ${{secrets.SERVER_ROOT}} && npm run db-migrate"
 
       - name: Seed database
         run: ssh ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}} "source ~/.nvm/nvm.sh && nvm use default && cd ${{secrets.SERVER_ROOT}} && npm run db-seed"
+
+      - name: Build project on server
+        run: ssh ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}} "source ~/.nvm/nvm.sh && nvm use default && cd ${{secrets.SERVER_ROOT}} && npm run build"
