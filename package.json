@@ -1,0 +1,31 @@
+{
+  "name": "jaab.dev",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db-migrate": "cd src/db && sequelize-cli db:migrate",
+    "db-seed": "cd src/db && sequelize-cli db:seed:all",
+    "db-unseed": "cd src/db && sequelize-cli db:seed:undo:all",
+    "db-add-model": "cd src/db && sequelize-cli model:generate --name NewTable --attributes id:UUID",
+    "db-add-seeder": "cd src/db && sequelize-cli seed:generate --name new-seeder",
+    "db-add-migration": "cd src/db && sequelize-cli migration:generate --name new-migration"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "next": "14.2.5",
+    "path": "^0.12.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2"
+  },
+  "devDependencies": {
+    "postcss": "^8",
+    "sqlite3": "5.1.7",
+    "tailwindcss": "^3.4.1"
+  }
+}
