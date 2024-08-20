@@ -7,12 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db-migrate": "cd src/db && sequelize-cli db:migrate",
-    "db-seed": "cd src/db && sequelize-cli db:seed:all",
-    "db-unseed": "cd src/db && sequelize-cli db:seed:undo:all",
-    "db-add-model": "cd src/db && sequelize-cli model:generate --name NewTable --attributes id:UUID",
-    "db-add-seeder": "cd src/db && sequelize-cli seed:generate --name new-seeder",
-    "db-add-migration": "cd src/db && sequelize-cli migration:generate --name new-migration"
+    "db-migrate": "cd db && sequelize-cli db:migrate",
+    "db-seed": "cd db && sequelize-cli db:seed:all",
+    "db-unseed": "cd db && sequelize-cli db:seed:undo:all",
+    "db-add-model": "cd db && sequelize-cli model:generate --name NewTable --attributes id:UUID",
+    "db-add-seeder": "cd db && sequelize-cli seed:generate --name new-seeder",
+    "db-add-migration": "cd db && sequelize-cli migration:generate --name new-migration"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
