@@ -2,7 +2,7 @@ const dotenv = require('dotenv')
 const path = require('path')
 
 // LOAD ENV CONFIG
-dotenv.config()
+dotenv.config({ path: path.resolve(__dirname, '.env') })
 
 // CONFIGURATION
 const config = {
