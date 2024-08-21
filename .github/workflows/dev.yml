@@ -51,3 +51,6 @@ jobs:
 
       - name: Build project on server
         run: ssh ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}} "source ~/.nvm/nvm.sh && nvm use default && cd ${{secrets.SERVER_ROOT}} && npm run build"
+
+      - name: Start server
+        run: ssh ${{secrets.SERVER_USER}}@${{secrets.SERVER_HOST}} "source ~/.nvm/nvm.sh && nvm use default && cd ${{secrets.SERVER_ROOT}} && npx pm2 start \"PORT=${{secrets.SERVER_PORT}} next start\" --name ${{secrets.SERVER_PROCESS_NAME}} && npx pm2 save"
