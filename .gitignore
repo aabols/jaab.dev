@@ -37,3 +37,6 @@ next-env.d.ts
 
 # config
 .env
+
+# db
+dev-db.sqlite3
