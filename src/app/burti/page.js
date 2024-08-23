@@ -1,4 +1,4 @@
-import React, { cache } from 'react'
+import React from 'react'
 import Flashcards from './flashcards'
 
 import { Flashcard } from '@/../db/models'
