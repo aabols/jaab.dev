@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 
-export default function FormField({ id, label, type, placeholder }) {
+export default function FormField({ id, label, type, placeholder, onChange }) {
   return (
     <div className="mb-5">
       <label
@@ -22,6 +22,7 @@ export default function FormField({ id, label, type, placeholder }) {
         id={id}
         name={id}
         placeholder={placeholder}
+        onChange={onChange}
         className={clsx([
           'bg-gray-50',
           'border',

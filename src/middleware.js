@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 
 export function middleware(req) {
   const authCookie = req.cookies.get('auth')
-  console.log({ authCookie })
 
   // LOGOUT ROUTE
   if (req.nextUrl.pathname === '/logout') {
