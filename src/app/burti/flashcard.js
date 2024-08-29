@@ -10,7 +10,7 @@ export default function Flashcard({ content, footer, onClick }) {
       <div className={contentStyle}>
         {content}
       </div>
-      <div class={footerStyle}>
+      <div className={footerStyle}>
         {footer}
       </div>
     </div>
