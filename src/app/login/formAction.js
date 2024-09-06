@@ -7,8 +7,7 @@ export default function FormAction({ caption, onClick }) {
       onClick={onClick}
       className={clsx([
         'underline',
-        'text-right',
-        'me-2',
+        'ms-2',
         'text-sm',
         'font-light',
         'text-gray-900',
