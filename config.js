@@ -1,8 +1,5 @@
-const dotenv = require('dotenv')
+import './envConfig.js'
 const path = require('path')
-
-// LOAD ENV CONFIG
-dotenv.config({ path: path.resolve(__dirname, '.env') })
 
 // CONFIGURATION
 const config = {
@@ -14,7 +11,7 @@ const config = {
     password: process.env.DB_PASS || 'rootpw',
     seederStorage: 'sequelize',
     storage: process.env.DB_STORAGE || path.join(process.env.SERVER_ROOT, 'db/dev-db.sqlite3')
-  }
+  },
 }
 
 module.exports = config
