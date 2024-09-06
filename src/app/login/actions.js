@@ -1,40 +1,50 @@
 'use server'
-import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
-
-const cookieKey = 'auth'
-const users = {
-  Janis: 'asdf'
-}
-// const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+import { compare } from 'bcrypt'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { isRedirectError } from 'next/dist/client/components/redirect'
+import { sign } from '@/app/utils'
+import { User } from '@/../db/models'
 
 export async function loginUser(redirectUrl, formData) {
-  const { username, password } = Object.fromEntries(formData)
+  try {
+    const { username, password } = Object.fromEntries(formData)
+    const user = await User.scope('auth').findOne({ where: { username } })
+    if (!user) throw { status: 404, message: 'Username is available!' }
 
-  // await delay(1000)
+    const passwordsMatch = await compare(password, user.password)
+    if (!passwordsMatch) throw { status: 401, message: 'Incorrect password!' }
 
-  // USER DOESN'T EXIST
-  if (!users[username]) return { status: 404, message: 'Username is available!' }
-
-  // WRONG PASSWORD
-  if (users[username] !== password) return { status: 401, message: 'Incorrect password!' }
-
-  // VALID USER
-  cookies().set(cookieKey, username)
-  redirect(redirectUrl || '/')
+    const token = await sign({ username }, process.env.JWT_KEY)
+    cookies().set(process.env.AUTH_COOKIE_NAME, token)
+    redirect(redirectUrl || '/')
+  } catch (err) {
+    if (isRedirectError(err)) { throw err }
+    const { status, message } = err
+    return { status: status || 500, message: message || 'Something went wrong' }
+  }
 }
 
 export async function registerUser(redirectUrl, formData) {
-  const { username, password, passwordRepeat } = Object.fromEntries(formData)
+  console.log('registerUser')
+  try {
+    const { username, password, passwordRepeat } = Object.fromEntries(formData)
 
-  // USERNAME NOT AVAILABLE
-  if (users[username]) return { status: 403, message: 'Username is taken!' }
+    if (password !== passwordRepeat) throw { status: 400, message: 'Passwords don\'t match!' }
 
-  // PASSWORDS DON'T MATCH
-  if (password !== passwordRepeat) return { status: 400, message: 'Passwords don\'t match!' }
+    const [user, created] = await User.findOrCreate({
+      where: { username },
+      defaults: { password }
+    })
 
-  // SUCCESS
-  users[username] = password
-  cookies().set(cookieKey, username)
-  redirect(redirectUrl || '/')
+    if (!created) throw { status: 403, message: 'Username is taken!' }
+
+    const token = await sign({ username }, process.env.JWT_KEY)
+    cookies().set(process.env.AUTH_COOKIE_NAME, token)
+    redirect(redirectUrl || '/')
+  } catch (err) {
+    if (isRedirectError(err)) { throw err }
+    const { status, message } = err
+    return { status: status || 500, message: message || 'Something went wrong' }
+  }
 }
