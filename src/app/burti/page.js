@@ -1,6 +1,5 @@
 import React from 'react'
 import Flashcards from './flashcards'
-
 import { Flashcard } from '@/../db/models'
 
 const getFlashcards = async () => {
