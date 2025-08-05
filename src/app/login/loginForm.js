@@ -57,17 +57,15 @@ export default function LoginForm() {
   }
 
   return (
-    <Suspense>
-      <form className='max-w-sm mx-auto' onSubmit={registering ? handleRegistration : handleLogin}>
-        <FormField id='username' type='text' label='Username' onChange={handleUsernameChange} />
-        {formMessage && (formStatus === 404 || formStatus === 403) ? <FormMessage message={formMessage} /> : null}
-        <FormField id='password' type='password' label='Password' onChange={handlePasswordChange} />
-        {formMessage && formStatus === 401 ? <FormMessage message={formMessage} /> : null}
-        {registering ? <FormField id='repeatPassword' type='password' label='Repeat password' onChange={handlePasswordChange} /> : null}
-        {formMessage && formStatus === 400 ? <FormMessage message={formMessage} /> : null}
-        <FormButton caption={registering ? 'Register' : 'Log in'} pendingCaption={registering ? 'Registering...' : 'Logging in...'} />
-        <FormAction caption={registering ? 'or login' : 'or register'} onClick={handleModeChange} />
-      </form>
-    </Suspense>
+    <form className='max-w-sm mx-auto' onSubmit={registering ? handleRegistration : handleLogin}>
+      <FormField id='username' type='text' label='Username' onChange={handleUsernameChange} />
+      {formMessage && (formStatus === 404 || formStatus === 403) ? <FormMessage message={formMessage} /> : null}
+      <FormField id='password' type='password' label='Password' onChange={handlePasswordChange} />
+      {formMessage && formStatus === 401 ? <FormMessage message={formMessage} /> : null}
+      {registering ? <FormField id='repeatPassword' type='password' label='Repeat password' onChange={handlePasswordChange} /> : null}
+      {formMessage && formStatus === 400 ? <FormMessage message={formMessage} /> : null}
+      <FormButton caption={registering ? 'Register' : 'Log in'} pendingCaption={registering ? 'Registering...' : 'Logging in...'} />
+      <FormAction caption={registering ? 'or login' : 'or register'} onClick={handleModeChange} />
+    </form>
   )
 }
