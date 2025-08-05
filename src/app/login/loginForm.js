@@ -73,7 +73,7 @@ export default function LoginForm() {
     <form className='max-w-sm mx-auto' action={registering ? formRegister : formLogin}>
       <input type='hidden' name='redirectUrl' value={redirectUrl || ''} />
       <FormField id='username' type='text' label='Username' onChange={handleUsernameChange} />
-      {formMessage && (formStatus === 404 || formStatus === 403) ? <FormMessage message={formMessage} /> : null}
+      {formMessage && (formStatus === 404 || formStatus === 403 || formStatus === 500) ? <FormMessage message={formMessage} /> : null}
       <FormField id='password' type='password' label='Password' onChange={handlePasswordChange} />
       {formMessage && formStatus === 401 ? <FormMessage message={formMessage} /> : null}
       {registering ? <FormField id='repeatPassword' type='password' label='Repeat password' onChange={handlePasswordChange} /> : null}
