@@ -6,9 +6,9 @@ import { isRedirectError } from 'next/dist/client/components/redirect'
 import { sign } from '@/app/utils'
 import { User } from '@/../db/models'
 
-export async function loginUser(redirectUrl, formData) {
+export async function loginUser(_prevState, formData) {
   try {
-    const { username, password } = Object.fromEntries(formData)
+    const { username, password, redirectUrl } = Object.fromEntries(formData)
     const user = await User.scope('auth').findOne({ where: { username } })
     if (!user) throw { status: 404, message: 'Username is available!' }
 
@@ -21,14 +21,14 @@ export async function loginUser(redirectUrl, formData) {
   } catch (err) {
     if (isRedirectError(err)) { throw err }
     const { status, message } = err
-    return { status: status || 500, message: message || 'Something went wrong' }
+    return { status: status || 500, msg: message || 'Something went wrong' }
   }
 }
 
-export async function registerUser(redirectUrl, formData) {
+export async function registerUser(_prevState, formData) {
   console.log('registerUser')
   try {
-    const { username, password, repeatPassword } = Object.fromEntries(formData)
+    const { username, password, repeatPassword, redirectUrl } = Object.fromEntries(formData)
 
     if (password !== repeatPassword) throw { status: 400, message: 'Passwords don\'t match!' }
 
@@ -45,6 +45,6 @@ export async function registerUser(redirectUrl, formData) {
   } catch (err) {
     if (isRedirectError(err)) { throw err }
     const { status, message } = err
-    return { status: status || 500, message: message || 'Something went wrong' }
+    return { status: status || 500, msg: message || 'Something went wrong' }
   }
 }

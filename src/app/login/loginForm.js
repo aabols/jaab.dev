@@ -1,6 +1,7 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useEffect, useState } from 'react'
+import { useFormState } from 'react-dom';
+import { useEffect, useState } from 'react'
 import { loginUser, registerUser } from './actions'
 import FormButton from './formButton'
 import FormField from './formField'
@@ -11,6 +12,8 @@ export default function LoginForm() {
   const [formStatus, setFormStatus] = useState()
   const [formMessage, setFormMessage] = useState()
   const [registering, setRegistering] = useState(false)
+  const [stateRegister, formRegister] = useFormState(registerUser, { status: null, msg: null })
+  const [stateLogin, formLogin] = useFormState(loginUser, { status: null, msg: null })
   const searchParams = useSearchParams()
   const redirectUrl = searchParams.get('redirect')
 
@@ -22,6 +25,16 @@ export default function LoginForm() {
         setRegistering(false)
     }
   }, [formStatus])
+
+  useEffect(() => {
+    setFormStatus(stateLogin.status)
+    setFormMessage(stateLogin.msg)
+  }, [stateLogin])
+
+  useEffect(() => {
+    setFormStatus(stateRegister.status)
+    setFormMessage(stateRegister.msg)
+  }, [stateRegister])
 
   const handleRegistration = async (e) => {
     e.preventDefault()
@@ -57,7 +70,8 @@ export default function LoginForm() {
   }
 
   return (
-    <form className='max-w-sm mx-auto' onSubmit={registering ? handleRegistration : handleLogin}>
+    <form className='max-w-sm mx-auto' action={registering ? formRegister : formLogin}>
+      <input type='hidden' name='redirectUrl' value={redirectUrl || ''} />
       <FormField id='username' type='text' label='Username' onChange={handleUsernameChange} />
       {formMessage && (formStatus === 404 || formStatus === 403) ? <FormMessage message={formMessage} /> : null}
       <FormField id='password' type='password' label='Password' onChange={handlePasswordChange} />
