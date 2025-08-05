@@ -28,9 +28,9 @@ export async function loginUser(redirectUrl, formData) {
 export async function registerUser(redirectUrl, formData) {
   console.log('registerUser')
   try {
-    const { username, password, passwordRepeat } = Object.fromEntries(formData)
+    const { username, password, repeatPassword } = Object.fromEntries(formData)
 
-    if (password !== passwordRepeat) throw { status: 400, message: 'Passwords don\'t match!' }
+    if (password !== repeatPassword) throw { status: 400, message: 'Passwords don\'t match!' }
 
     const [user, created] = await User.findOrCreate({
       where: { username },
