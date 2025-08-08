@@ -2,5 +2,5 @@ const path = require('path')
 
 module.exports = {
   env: 'db',
-  config: path.resolve(__dirname, '../sequelize-cli-config.js')
+  config: path.resolve(__dirname, '../config.js')
 }

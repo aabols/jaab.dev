@@ -1,5 +1,8 @@
-import './envConfig.js'
+const { loadEnvConfig } = require('@next/env')
 const path = require('path')
+
+loadEnvConfig(__dirname)
+console.log('Loading env config from', __dirname)
 
 // CONFIGURATION
 const config = {
