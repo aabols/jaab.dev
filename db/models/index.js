@@ -7,10 +7,12 @@ const sequelize = new Sequelize(config.db)
 
 const Flashcard = require('./flashcard.js')(sequelize, Sequelize.DataTypes)
 const User = require('./user.js')(sequelize, Sequelize.DataTypes)
+const List = require('./list.js')(sequelize, Sequelize.DataTypes)
 
 const db = {
   Flashcard,
-  User
+  User,
+  List,
 }
 
 Object.keys(db).forEach(modelName => {

@@ -9,6 +9,7 @@
     "lint": "next lint",
     "db-sync": "cd db && sequelize-cli db:migrate && sequelize-cli db:seed:all",
     "db-migrate": "cd db && sequelize-cli db:migrate",
+    "db-unmigrate": "cd db && sequelize-cli db:migrate:undo",
     "db-seed": "cd db && sequelize-cli db:seed:all",
     "db-unseed": "cd db && sequelize-cli db:seed:undo:all",
     "db-add-model": "cd db && sequelize-cli model:generate --name NewTable --attributes id:UUID",

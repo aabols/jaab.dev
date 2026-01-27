@@ -13,7 +13,8 @@ const config = {
     username: process.env.DB_USER || 'root',
     password: process.env.DB_PASS || 'rootpw',
     seederStorage: 'sequelize',
-    storage: process.env.DB_STORAGE || path.join(process.env.SERVER_ROOT, 'db/dev-db.sqlite3')
+    storage: process.env.DB_STORAGE || path.join(process.env.SERVER_ROOT, 'db/dev-db.sqlite3'),
+    logging: console.log,
   },
 }
 
